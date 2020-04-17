@@ -12,17 +12,19 @@ import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping(path="/car")
-public class CarController {
+public class CarController {	
+	
+	Generator generator = new Generator();
 
 	@GetMapping(path = "/carOneStates", produces = MediaType.TEXT_EVENT_STREAM_VALUE) 
 	public Flux<Car> getCarOneStates() {
-		return Flux.interval(Duration.ofSeconds(1)).onBackpressureDrop().map(Generator::generateState)
+		return Flux.interval(Duration.ofSeconds(1)).onBackpressureDrop().map(interval -> generator.generateCarOneState(interval))
 				.flatMapIterable(x -> x);
 	}
 	
 	@GetMapping(path = "/carTwoStates", produces = MediaType.TEXT_EVENT_STREAM_VALUE) 
 	public Flux<Car> getCarTwoStates() {
-		return Flux.interval(Duration.ofSeconds(1)).onBackpressureDrop().map(Generator::generateState)
+		return Flux.interval(Duration.ofSeconds(1)).onBackpressureDrop().map(interval -> generator.generateCarTwoState(interval))
 				.flatMapIterable(x -> x);
 	}
 

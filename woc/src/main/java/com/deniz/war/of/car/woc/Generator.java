@@ -4,31 +4,49 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Generator {
 
-	private static final Random RANDOM = new Random(System.currentTimeMillis());
+	private Random random = new Random();
 
-	private static final List<Integer> FUEL_LEVEL = Arrays.asList(12, 12, 12, 126, 1569, 12, 12, 16);
-	private static final List<Integer> AMMO_STOCK = Arrays.asList(5, 6, 10, 5, 6, 10, 5, 6, 10);
-	private static final List<Integer> DAMAGING_RATIO = Arrays.asList(1, 3, 8, 13, 1991, 18, 8, 113, 1991, 18);
+	private static Integer carOneFuelLevel = 100;
+	private static Integer carOneAmmoStock = 100;
+	private static Integer carOneDamagingRatio = 100;
 
-	public static Integer randomFuelLevel() {
-		return FUEL_LEVEL.get(RANDOM.nextInt(FUEL_LEVEL.size()));
+	private static Integer carTwoFuelLevel = 100;
+	private static Integer carTwoAmmoStock = 100;
+	private static Integer carTwoDamagingRatio = 100;
+
+	public void randomCarOne() {
+		carOneFuelLevel = ((random.nextInt(100)%2 == 0) ? true : false) && carOneFuelLevel > 0 ? carOneFuelLevel-5 : carOneFuelLevel;
+		carOneAmmoStock = ((random.nextInt(100)%2 == 0) ? true : false) && carOneAmmoStock > 0 ? carOneAmmoStock-5 : carOneAmmoStock;
+		carOneDamagingRatio = ((random.nextInt(100)%2 == 0) ? true : false) && carOneDamagingRatio > 0 ? carOneDamagingRatio-10
+				: carOneDamagingRatio;
 	}
 
-	public static Integer randomAmmoStock() {
-		return AMMO_STOCK.get(RANDOM.nextInt(AMMO_STOCK.size()));
+	public void randomCarTwo() {
+		carTwoFuelLevel = ((random.nextInt(100)%2 == 0) ? true : false) && carTwoFuelLevel > 0 ? carTwoFuelLevel-5 : carTwoFuelLevel;
+		carTwoAmmoStock = ((random.nextInt(100)%2 == 0) ? true : false) && carTwoAmmoStock > 0 ? carTwoAmmoStock-5 : carTwoAmmoStock;
+		carTwoDamagingRatio = ((random.nextInt(100)%2 == 0) ? true : false) && carTwoDamagingRatio > 0 ? carTwoDamagingRatio-10
+				: carTwoDamagingRatio;
 	}
 
-	public static Integer randomDamagingRatio() {
-		return DAMAGING_RATIO.get(RANDOM.nextInt(DAMAGING_RATIO.size()));
-	}
-	
-	public static List<Car> generateState(long interval) {
-		Car obj = new Car(Generator.randomFuelLevel(), Generator.randomAmmoStock(), Generator.randomDamagingRatio());
+	public List<Car> generateCarOneState(long interval) {
+		randomCarOne();
+		Car obj = new Car(carOneFuelLevel, carOneAmmoStock, carOneDamagingRatio);
 		return Arrays.asList(obj);
 
 	}
 
+	public List<Car> generateCarTwoState(long interval) {
+		randomCarTwo();
+		Car obj = new Car(carTwoFuelLevel, carTwoAmmoStock, carTwoDamagingRatio);
+		return Arrays.asList(obj);
+
+	}
 
 }
