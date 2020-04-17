@@ -23,5 +23,12 @@ public class Generator {
 	public static Integer randomDamagingRatio() {
 		return DAMAGING_RATIO.get(RANDOM.nextInt(DAMAGING_RATIO.size()));
 	}
+	
+	public static List<Car> generateState(long interval) {
+		Car obj = new Car(Generator.randomFuelLevel(), Generator.randomAmmoStock(), Generator.randomDamagingRatio());
+		return Arrays.asList(obj);
+
+	}
+
 
 }

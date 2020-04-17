@@ -44,12 +44,12 @@ class CarOfWar extends Component {
     }
 
     async componentDidMount() {
-        this.carTwoEventSource();
+        this.carOneEventSource();
         this.carTwoEventSource();
     }
 
 
-    carTwoEventSource() {
+    carOneEventSource() {
         const eventSourceForCarOne = new EventSource(`${COURSE_API_URL}/woc/car/carOneStates`);
         eventSourceForCarOne.onopen = (event) => console.log('open', event);
         eventSourceForCarOne.onmessage = (event) => {
